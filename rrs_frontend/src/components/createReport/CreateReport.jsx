@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'; // Import useDispatch hook
+import { useNavigate } from "react-router-dom";
 import { addReport } from '../../store/actions/reportActions'; // Import addReport action
 import './CreateReport.css'; // Import the CSS file
 import Navbar from '../navbar/Navbar';
@@ -7,6 +8,7 @@ import Navbar from '../navbar/Navbar';
 const CreateReport = () => {
 
   const dispatch = useDispatch(); // Initialize useDispatch hook
+  const navigate = useNavigate();
   
   const [title, setTitle] = useState('');
   const [findings, setFindings] = useState('');
@@ -17,7 +19,7 @@ const CreateReport = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation
+    // data Validation
     if (!title.trim() || !findings.trim() || !impression.trim()) {
       setErrorMessage('Please fill in all fields.');
       return;
@@ -33,7 +35,9 @@ const CreateReport = () => {
         setImpression('');
         setStatus('New');
         setErrorMessage('');
-        window.alert('Report Submitted Successfully')
+
+        window.alert('Report Submitted Successfully');
+        navigate(`/`);
       
       
     } catch (error) {

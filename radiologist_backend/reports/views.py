@@ -5,12 +5,15 @@ from .models import Report
 from .report_serializers import ReportSerializer
 
 class ReportListCreateAPIView(APIView):
-    def get(self, request):
+    """
+    This is class API view for getting (all), and creating(single) reports
+    """
+    def get(self, request): #get reports
         reports = Report.objects.all()
         serializer = ReportSerializer(reports, many=True)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request): #create report
         serializer = ReportSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -18,6 +21,10 @@ class ReportListCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ReportRetrieveUpdateDestroyAPIView(APIView):
+    """
+    This is a class API View for getting single report, updating it, and deleting it
+    """
+
     def get_object(self, pk):
         try:
             return Report.objects.get(pk=pk)
@@ -32,10 +39,10 @@ class ReportRetrieveUpdateDestroyAPIView(APIView):
     def put(self, request, pk):
         report = self.get_object(pk)
         serializer = ReportSerializer(report, data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(): #if valid
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) #error updating report
 
     def delete(self, request, pk):
         report = self.get_object(pk)

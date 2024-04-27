@@ -1,5 +1,11 @@
 import axios from '../actions/axiosConfig'; // Import Axios instance
 
+/**
+ * Interacting with the backend server APIs
+ * @returns Response
+ */
+
+
 export const fetchReports = async () => {
   try {
     const response = await axios.get('/api/v1/reports/');
@@ -13,7 +19,7 @@ export const fetchReports = async () => {
 export const addReport = async (reportData) => {
   try {
     const response = await axios.post('/api/v1/reports/', reportData);
-    dispatch(loadReports());
+    // dispatch(fetchReports);
     return response.data;
   } catch (error) {
     console.error('Error adding report:', error);
@@ -24,7 +30,7 @@ export const addReport = async (reportData) => {
 export const updateReport = async (reportId, reportData) => {
   try {
     const response = await axios.put(`/api/v1/reports/${reportId}/`, reportData);
-    dispatch(loadReports());
+    // dispatch(fetchReports);
     return response.data;
   } catch (error) {
     console.error('Error updating report:', error);
@@ -35,7 +41,7 @@ export const updateReport = async (reportId, reportData) => {
 export const deleteReport = async (reportId) => {
   try {
     const response = await axios.delete(`/api/v1/reports/${reportId}/`);
-    dispatch(loadReports());
+    // dispatch(fetchReports);
     return response.data;
   } catch (error) {
     console.error('Error deleting report:', error);

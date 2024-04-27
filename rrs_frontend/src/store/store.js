@@ -4,7 +4,7 @@ import reportReducer from './reducers/reportReducer';
 
 const rootReducer = combineReducers({
   reports: reportReducer,
-  // Add other reducers here if needed
+  
 });
 
 const store = configureStore({

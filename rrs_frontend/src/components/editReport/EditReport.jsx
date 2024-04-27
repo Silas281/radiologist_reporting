@@ -6,9 +6,14 @@ import "./EditReport.css";
 import Navbar from "../navbar/Navbar";
 
 const EditReport = () => {
+
+  //get report ID
   const { id } = useParams();
+  //hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //get report
   const report = useSelector((state) => state.reports.selectedReport);
   const [formData, setFormData] = useState({
     title: "",
@@ -32,6 +37,7 @@ const EditReport = () => {
     }
   }, [report]);
 
+  //handle form change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -39,11 +45,12 @@ const EditReport = () => {
     });
   };
 
+  //handle submit data
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateReport(id, formData));
-    navigate(`/reports/${report.id}`);
     window.alert("Report Updated Successfully");
+    navigate(`/reports/${report.id}`); //go back to report details
   };
 
   return (

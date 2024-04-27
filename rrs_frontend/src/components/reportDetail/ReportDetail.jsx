@@ -5,10 +5,14 @@ import { getReport, deleteReport } from '../../store/actions/reportActions';
 import './ReportDetail.css';
 import Navbar from '../navbar/Navbar';
 
+
+
 const ReportDetail = () => {
+  //get report id 
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //get report
   const report = useSelector(state => state.reports.selectedReport);
 
   useEffect(() => {
@@ -22,6 +26,8 @@ const ReportDetail = () => {
       navigate('/');
     }
   };
+
+  //onClick update button
   const handleUpdate = () => {
       navigate(`/report-update/${id}`);
     

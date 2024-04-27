@@ -5,18 +5,28 @@ import { loadReports } from '../../store/actions/reportActions';
 import './ReportList.css';
 import Navbar from '../navbar/Navbar';
 
+/**
+ * Displaying all reports
+ * @returns Jsx
+ */
 const ReportList = () => {
   const dispatch = useDispatch();
   const reports = useSelector(state => state.reports.reports);
 
+  //load reports on dispatch calls
   useEffect(() => {
     dispatch(loadReports());
   }, [dispatch]);
 
-  useEffect(() => {
-    window.reloa
-  }, []);
+  useEffect(()=>{
+    dispatch(loadReports());
+  },[]);
 
+/**
+ * 
+ * @param {*} status 
+ * @returns string -className based on report status
+ */
   const getStatusClassName = (status) => {
     switch (status) {
       case 'New':
@@ -37,7 +47,8 @@ const ReportList = () => {
       <Navbar/>
     <div className="report-list-container">
       <h2 className="report-list-header">Report List</h2>
-      <ul>
+      {reports ?(
+        <ul>
         {reports.map(report => (
           <li className="report-item" key={report.id}>
             
@@ -49,6 +60,9 @@ const ReportList = () => {
           </li>
         ))}
       </ul>
+      ):(
+        <h2>No Reports</h2>
+      )}
       <Link className="create-report-link" to="/create">Create New Report</Link>
     </div>
     </div>

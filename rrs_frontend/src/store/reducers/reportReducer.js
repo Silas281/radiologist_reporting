@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+/**
+ * Setting up reports reducers using redux toolkit
+ */
 const initialState = {
   reports: [],
   selectedReport: null,
 };
+/**
+ * Report Sclice
+ */
 
 const reportSlice = createSlice({
   name: 'reports',

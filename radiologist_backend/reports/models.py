@@ -1,6 +1,10 @@
 from django.db import models
 
+
 class Report(models.Model):
+    '''
+    Report Model: (title,findings,report_status,impression)
+    '''
     title = models.CharField(max_length=200)
     findings = models.TextField()
     REPORT_STATUS_CHOICES = [

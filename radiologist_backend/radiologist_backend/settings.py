@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-uatahk-+@na76$*09yyv6jbwe0**eix6i*22_*@yz*t12y)e3^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] #allow all hosts
 
 
 # Application definition
@@ -79,7 +79,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'radiologist_backend.wsgi.application'
 
 
-# Database
+# Database  MySQL setup with docker
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {  

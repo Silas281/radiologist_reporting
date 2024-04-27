@@ -37,7 +37,18 @@
     transition: color 0.3s;
   }
   
-  .nav-link:hover {
+  .reports:hover {
     color: #ef477f; 
   }
+
+  .add-new{
+    padding: 5px 10px;
+    border: 1px solid #ef477f;
+    border-radius: 5px;
+  }
   
+  .add-new:hover{
+    
+    background-color: #ef477f;
+    color: #fff !important;
+  }

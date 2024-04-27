@@ -5,6 +5,10 @@ import CreateReport from '../components/createReport/CreateReport';
 import ReportDetail from '../components/reportDetail/ReportDetail';
 import EditReport from '../components/editReport/EditReport';
 
+/**
+ * App navigation and routing using react-router-dom
+ * @returns 
+ */
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<ReportList />} />
