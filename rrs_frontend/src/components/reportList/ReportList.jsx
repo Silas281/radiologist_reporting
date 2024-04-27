@@ -16,6 +16,7 @@ const ReportList = () => {
   //load reports on dispatch calls
   useEffect(() => {
     dispatch(loadReports());
+   
   }, [dispatch]);
 
   useEffect(()=>{
@@ -46,8 +47,8 @@ const ReportList = () => {
     <div className='main'>
       <Navbar/>
     <div className="report-list-container">
-      <h2 className="report-list-header">Report List</h2>
-      {reports ?(
+      <h2 className="report-list-header">Reports</h2>
+      {reports.length >0 ?(
         <ul>
         {reports.map(report => (
           <li className="report-item" key={report.id}>
@@ -61,7 +62,7 @@ const ReportList = () => {
         ))}
       </ul>
       ):(
-        <h2>No Reports</h2>
+        <h5>No Reports 📪</h5>
       )}
       <Link className="create-report-link" to="/create">Create New Report</Link>
     </div>
