@@ -1,18 +1,20 @@
-# Use the official Python image as base
+
 FROM python:3-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y default-libmysqlclient-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the backend code to the container
-COPY . /app
+# Copy the project files
+COPY . .
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
 
 # Expose the Django development server port
 EXPOSE 8000
