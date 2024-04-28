@@ -82,16 +82,21 @@ WSGI_APPLICATION = 'radiologist_backend.wsgi.application'
 # Database  MySQL setup with docker
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {  
-    'default': {  
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'reports_db',  
-        'USER': 'root',  
-        'PASSWORD': 'admin',  
-        'HOST': '127.0.0.1',  
-        'PORT': '8080',  
-        
-    }  
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME','reports_db'),
+        'USER': os.getenv('DB_USER','root'),
+        'PASSWORD': os.getenv('DB_PASSWORD','admin'),
+        'HOST': os.getenv('DB_HOST','127.0.0.1'),
+        'PORT': os.getenv('DB_PORT','8080'),
+    }
 }
 
 
