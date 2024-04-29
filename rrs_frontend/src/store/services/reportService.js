@@ -20,7 +20,6 @@ export const addReport = async (reportData) => {
   try {
     const response = await axios.post('/api/v1/reports/', reportData);
     // dispatch(fetchReports);
-   
     return response.data;
   } catch (error) {
     console.error('Error adding report:', error);

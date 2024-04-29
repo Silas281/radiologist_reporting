@@ -7,7 +7,7 @@ FROM mysql:8
 COPY ./database.sql /docker-entrypoint-initdb.d/database.sql
 
 # Set the MySQL root password
-ENV MYSQL_ROOT_PASSWORD=admin
+ENV MYSQL_ROOT_PASSWORD admin
 
 # Allow connections from all hosts
-RUN echo "[mysqld]\nbind-address = 0.0.0.0" >> /etc/mysql/my.cnf
+#RUN echo "[mysqld]\nbind-address = 0.0.0.0" >> /etc/mysql/my.cnf
