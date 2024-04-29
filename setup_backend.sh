@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Dockerize the MySQL Database
-cd /path/to/radiologist_backend/MySQL
+cd radiologist_backend/MySQL
 docker-compose up --build -d
 
 #move one step back
