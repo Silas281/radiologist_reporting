@@ -5,7 +5,7 @@ class Report(models.Model):
     '''
     Report Model: (title,findings,report_status,impression)
     '''
-    title = models.CharField(max_length=200,null=True)
+    title = models.CharField(max_length=400,null=True)
     findings = models.TextField()
     REPORT_STATUS_CHOICES = [
         ('New', 'New'),
