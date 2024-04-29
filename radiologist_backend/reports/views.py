@@ -6,10 +6,14 @@ from .report_serializers import ReportSerializer
 
 class ReportListCreateAPIView(APIView):
     """
-    This is class API view for getting (all), and creating(single) reports
+    This is class API view for getting (all), creating(single) reports, and filtering reports by status
     """
-    def get(self, request): #get reports
-        reports = Report.objects.all()
+    def get(self, request): #get reports (all or by status)
+        status_param = request.query_params.get('report_status', None)
+        if status_param:
+            reports = Report.objects.filter(report_status=status_param)
+        else:
+            reports = Report.objects.all()
         serializer = ReportSerializer(reports, many=True)
         return Response(serializer.data)
 
@@ -19,6 +23,10 @@ class ReportListCreateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def filter_by_status(self, status_param):
+        return Report.objects.filter(report_status=status_param)
+
 
 class ReportRetrieveUpdateDestroyAPIView(APIView):
     """
