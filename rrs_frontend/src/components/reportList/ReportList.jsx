@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loadReports } from '../../store/actions/reportActions';
+import {fetchReports ,selectReportsByStatus } from '../../store/features/reportSlice'; // Import loadReports action from reportSlice
 import './ReportList.css';
 import Navbar from '../navbar/Navbar';
+
 
 /**
  * Component to display all reports with filtering functionality
@@ -11,13 +12,18 @@ import Navbar from '../navbar/Navbar';
  */
 const ReportList = () => {
   const dispatch = useDispatch();
-  const reports = useSelector(state => state.reports.reports);
+
+
+
   const [filteredReports, setFilteredReports] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
 
+    //const reports = useSelector(state => state.reports.reports);
+    const reports = useSelector(state => selectReportsByStatus(state, filterStatus));
+
   // Load reports on component mount
   useEffect(() => {
-    dispatch(loadReports());
+    dispatch(fetchReports());
   }, [dispatch]);
 
   // Update filtered reports when reports or filter status change
@@ -77,7 +83,12 @@ const ReportList = () => {
         </div>
         {/* Display filtered reports */}
         {filteredReports.length > 0 ? (
-          <ul>
+          <div>
+<ul>      <div className='display-header'>
+          <span>Title</span>
+          <span className='status-header'>Status</span>
+          <span>Actions</span>
+            </div>
             {filteredReports.map(report => (
               <li className="report-item" key={report.id}>
                 <span className="report-title">{report.title}</span>
@@ -88,8 +99,10 @@ const ReportList = () => {
               </li>
             ))}
           </ul>
+          </div>
+          
         ) : (
-          <h5>No {filterStatus} Reports 📪</h5>
+          <h5>No {filterStatus=='all'?'':filterStatus} Reports 📪</h5>
         )}
         {/* Create new report link */}
         <div className="create-report-link-container">

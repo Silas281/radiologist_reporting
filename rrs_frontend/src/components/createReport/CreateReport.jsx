@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { addReport } from '../../store/actions/reportActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate,Link } from 'react-router-dom';
+import { addReport, selectLoading, selectSuccess, selectError } from '../../store/features/reportSlice'; // Import selectors from reportSlice
 import './CreateReport.css';
 import Navbar from '../navbar/Navbar';
 
@@ -15,26 +15,32 @@ const CreateReport = () => {
   const [findings, setFindings] = useState('');
   const [impression, setImpression] = useState('');
   const [report_status, setStatus] = useState('New');
-  const [patientName, setPatientName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [referringPhysician, setReferringPhysician] = useState('');
+  const [patient_name, setPatientName] = useState('');
+  const [date_of_birth, setDateOfBirth] = useState('');
+  const [referring_physician, setReferringPhysician] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [on_click_submit, setOnClickSubmit] = useState(false);
+
+  // Select loading, success, and error states from Redux store
+  const loading = useSelector(selectLoading);
+  const success = useSelector(selectSuccess);
+  const error = useSelector(selectError);
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setOnClickSubmit(true);
     // Validate form fields
-    if (!title.trim() || !findings.trim() || !impression.trim() || !patientName.trim() || !dateOfBirth.trim() || !referringPhysician.trim()) {
+    if (!title.trim() || !findings.trim() || !impression.trim() || !patient_name.trim() || !date_of_birth.trim() || !referring_physician.trim()) {
       setErrorMessage('Please fill in all fields.');
       return;
     }
 
     try {
-      // Dispatch addReport action
-      await dispatch(addReport({ title, findings, impression, report_status, patientName, dateOfBirth, referringPhysician }));
-      
-      // Clear form fields and error message upon successful submission
+      // Dispatch addReport action from reportSlice
+      await dispatch(addReport({ title, findings, impression, report_status, patient_name, date_of_birth, referring_physician }));
+      if(on_click_submit && success){
+         // Clear form fields and error message upon successful submission
       setTitle('');
       setFindings('');
       setImpression('');
@@ -43,10 +49,11 @@ const CreateReport = () => {
       setDateOfBirth('');
       setReferringPhysician('');
       setErrorMessage('');
-      
-      // Show success message and navigate to home page
-      window.alert('Report Submitted Successfully');
-      navigate(`/`);
+
+
+      }
+     
+
     } catch (error) {
       console.error('Error submitting report:', error.message);
       setErrorMessage('Failed to submit report. Please try again later.');
@@ -109,7 +116,7 @@ const CreateReport = () => {
             <label>Patient Name</label>
             <input
               type='text'
-              value={patientName}
+              value={patient_name}
               onChange={(e) => setPatientName(e.target.value)}
               className='input-field'
               placeholder='Patient Name'
@@ -120,7 +127,7 @@ const CreateReport = () => {
             <label>Date of Birth</label>
             <input
               type='date'
-              value={dateOfBirth}
+              value={date_of_birth}
               onChange={(e) => setDateOfBirth(e.target.value)}
               className='input-field'
             />
@@ -130,7 +137,7 @@ const CreateReport = () => {
             <label>Referring Physician</label>
             <input
               type='text'
-              value={referringPhysician}
+              value={referring_physician}
               onChange={(e) => setReferringPhysician(e.target.value)}
               className='input-field'
               placeholder='Referring Physician'
@@ -138,7 +145,21 @@ const CreateReport = () => {
           </div>
           {/* Error message display */}
           <div className='input-field-container'>
-            {errorMessage && <div className='error-message'>{errorMessage}</div>}
+            {(on_click_submit && error) && <div className='error-message'>{error}</div>}
+          </div>
+          <div className='input-field-container'>
+            {(on_click_submit && errorMessage) && <div className='error-message'>{errorMessage}</div>}
+          </div>
+          {/* Loading indicator */}
+          <div className='input-field-container'>
+            {(on_click_submit && loading) && <div className='loading-message'>Submitting...</div>}
+          </div>
+          {/* Success message */}
+          <div className='input-field-container'>
+            {(on_click_submit && success) && <div className='success-message'>Report submitted successfully!
+            
+            <p> <Link to='/'>View Reports</Link></p></div>}
+           
           </div>
           {/* Submit button */}
           <div className='submit-container'>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getReport, updateReport } from "../../store/actions/reportActions";
+import { fetchReportById, updateReportById, selectSelectedReport, selectLoading, selectSuccess, selectError } from "../../store/features/reportSlice"; // Import actions from reportSlice
 import "./EditReport.css";
 import Navbar from "../navbar/Navbar";
 
 const EditReport = () => {
-
   // Get report ID from URL params
   const { id } = useParams();
 
@@ -15,7 +14,11 @@ const EditReport = () => {
   const navigate = useNavigate();
 
   // Get report data from Redux store
-  const report = useSelector((state) => state.reports.selectedReport);
+  const report = useSelector(selectSelectedReport);
+  const loading = useSelector(selectLoading);
+  const success = useSelector(selectSuccess);
+  
+  const error = useSelector(selectError);
 
   // State to store form data
   const [formData, setFormData] = useState({
@@ -28,9 +31,11 @@ const EditReport = () => {
     referring_physician: ""
   });
 
+  const [on_click_submit, setOnClickSubmit] = useState(false);
+
   // Fetch report data on component mount
   useEffect(() => {
-    dispatch(getReport(id));
+    dispatch(fetchReportById(id));
   }, [dispatch, id]);
 
   // Update form data when report data is fetched
@@ -59,18 +64,27 @@ const EditReport = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateReport(id, formData));
-    window.alert("Report Updated Successfully");
-    navigate(`/reports/${report.id}`); // Navigate back to report details
+    setOnClickSubmit(true);
+    dispatch(updateReportById({ id, reportData: formData }));
+    // Wait for success or error before navigating
+
+    
   };
 
+ useEffect(()=>{
+  if(on_click_submit && success){
+    navigate(`/reports/${id}`);
+  }
+ },[success, navigate, id])
+
   return (
-    <div className='main'>
-      <Navbar/>
+    <div className="main">
+      <Navbar />
       <div className="form-container">
         <h2 className="form-header">Edit Report</h2>
         <form onSubmit={handleSubmit}>
           {/* Title input field */}
+          {/* Add loading state check */}
           <div className="input-field-container">
             <label>Title</label>
             <input
@@ -79,6 +93,7 @@ const EditReport = () => {
               className="input-field"
               value={formData.title}
               onChange={handleChange}
+              disabled={loading} // Disable input field when loading
             />
           </div>
           {/* Findings textarea */}
@@ -89,6 +104,7 @@ const EditReport = () => {
               className="input-field"
               value={formData.findings}
               onChange={handleChange}
+              disabled={loading} // Disable input field when loading
             />
           </div>
           {/* Impression textarea */}
@@ -99,6 +115,7 @@ const EditReport = () => {
               className="input-field"
               value={formData.impression}
               onChange={handleChange}
+              disabled={loading} // Disable input field when loading
             />
           </div>
           {/* Report status select field */}
@@ -109,6 +126,7 @@ const EditReport = () => {
               className="select-field"
               value={formData.report_status}
               onChange={handleChange}
+              disabled={loading} // Disable select field when loading
             >
               <option value="New">New</option>
               <option value="Unread">Unread</option>
@@ -125,6 +143,7 @@ const EditReport = () => {
               className="input-field"
               value={formData.patient_name}
               onChange={handleChange}
+              disabled={loading} // Disable input field when loading
             />
           </div>
           <div className="input-field-container">
@@ -135,6 +154,7 @@ const EditReport = () => {
               className="input-field"
               value={formData.date_of_birth}
               onChange={handleChange}
+              disabled={loading} // Disable input field when loading
             />
           </div>
           <div className="input-field-container">
@@ -145,15 +165,18 @@ const EditReport = () => {
               className="input-field"
               value={formData.referring_physician}
               onChange={handleChange}
+              disabled={loading} // Disable input field when loading
             />
           </div>
           {/* Submit button */}
           <div className="submit-container">
-            <button type="submit" className="submit-button">
-              Save
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? "Saving..." : "Save"} {/* Show "Saving..." when loading */}
             </button>
           </div>
         </form>
+        {/* Show error message if error */}
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );

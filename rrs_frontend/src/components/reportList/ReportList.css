@@ -53,6 +53,21 @@
   margin-bottom: 20px;
 }
 
+.display-header{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px ;
+  padding-right: 30px;
+  background-color: #ef477f;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.status-header{
+  margin-left: 100px;
+}
+
 ul {
   padding: 0 !important;
 }
