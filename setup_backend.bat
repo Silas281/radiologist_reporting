@@ -1,11 +1,11 @@
 @echo off
 
-@REM rem Dockerize the MySQL Database
-@REM cd radiologist_backend/MySQL
-@REM docker-compose up
+rem Dockerize the MySQL Database
+cd radiologist_backend/MySQL
+docker-compose up -d
 
-@REM rem move back one step
-@REM cd ..
+rem move back one step
+cd ..
 
 rem Install dependencies
 pip install -r requirements.txt
