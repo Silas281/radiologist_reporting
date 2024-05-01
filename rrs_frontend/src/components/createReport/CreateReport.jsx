@@ -6,9 +6,9 @@ import './CreateReport.css';
 import Navbar from '../navbar/Navbar';
 
 const CreateReport = () => {
-  // Initialize dispatch and navigate hooks
+  // Initialize hooks
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
 
   // Define state variables for form fields and error message
   const [title, setTitle] = useState('');
