@@ -66,7 +66,7 @@ const EditReport = () => {
     e.preventDefault();
     setOnClickSubmit(true);
     dispatch(updateReportById({ id, reportData: formData }));
-    // Wait for success or error before navigating
+
 
     
   };

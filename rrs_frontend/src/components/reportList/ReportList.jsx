@@ -15,26 +15,21 @@ const ReportList = () => {
 
 
 
-  const [filteredReports, setFilteredReports] = useState([]);
+  // const [filteredReports, setFilteredReports] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
 
     //const reports = useSelector(state => state.reports.reports);
     const reports = useSelector(state => selectReportsByStatus(state, filterStatus));
 
+
+
   // Load reports on component mount
   useEffect(() => {
     dispatch(fetchReports());
+  
   }, [dispatch]);
 
-  // Update filtered reports when reports or filter status change
-  useEffect(() => {
-    if (filterStatus === 'all') {
-      setFilteredReports(reports);
-    } else {
-      const filtered = reports.filter(report => report.report_status === filterStatus);
-      setFilteredReports(filtered);
-    }
-  }, [filterStatus, reports]);
+
 
   /**
    * Function to get CSS class name based on report status
@@ -82,19 +77,19 @@ const ReportList = () => {
           </select>
         </div>
         {/* Display filtered reports */}
-        {filteredReports.length > 0 ? (
+        {reports && reports.length > 0 ? (
           <div>
 <ul>      <div className='display-header'>
           <span>Title</span>
           <span className='status-header'>Status</span>
           <span>Actions</span>
             </div>
-            {filteredReports.map(report => (
-              <li className="report-item" key={report.id}>
-                <span className="report-title">{report.title}</span>
+            {reports.map(report => (
+              <li className="report-item" key={report?.id}>
+                <span className="report-title">{report?.title}</span>
                 <div className='items-box'>
-                  <span className={`report-status ${getStatusClassName(report.report_status)}`}>{report.report_status}</span>
-                  <Link className="view-details-link" to={`/reports/${report.id}`}>View Details</Link>
+                  <span className={`report-status ${getStatusClassName(report?.report_status)}`}>{report?.report_status}</span>
+                  <Link className="view-details-link" to={`/reports/${report?.id}`}>View Details</Link>
                 </div>
               </li>
             ))}

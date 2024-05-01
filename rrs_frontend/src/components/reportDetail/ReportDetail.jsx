@@ -19,9 +19,6 @@ const ReportDetail = () => {
   // Fetch report data on component mount
   useEffect(() => {
     dispatch(fetchReportById(id));
-
-    // Clear selected report when component unmounts
-   console.log(report);
   }, [dispatch, id]); 
 
   // Handle delete report

@@ -20,7 +20,8 @@ export const fetchReports = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await reportService.fetchReports();
-      return response;
+      //console.log("Res->",response);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -48,8 +49,8 @@ export const fetchReportById = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await reportService.getReport(id);
-      console.log("Re->",response);
-      return response;
+      //console.log("Re->",response);
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -64,7 +65,8 @@ export const updateReportById = createAsyncThunk(
   async ({ id, reportData }, { rejectWithValue }) => {
     try {
       const response = await reportService.updateReport(id, reportData);
-      return response;
+      //console.log("Res->",response);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -77,7 +79,7 @@ export const deleteReportById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await reportService.deleteReport(id);
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
