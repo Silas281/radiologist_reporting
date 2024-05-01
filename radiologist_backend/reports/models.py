@@ -3,7 +3,7 @@ from django.db import models
 
 class Report(models.Model):
     '''
-    Report Model: (title,findings,report_status,impression)
+    Report Model
     '''
     title = models.CharField(max_length=400,null=True)
     findings = models.TextField()

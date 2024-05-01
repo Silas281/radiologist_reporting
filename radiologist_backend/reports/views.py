@@ -6,6 +6,8 @@ from .models import Report
 from .report_serializers import ReportSerializer
 
 def standard_response(success, data=None, message=None, status=status.HTTP_200_OK):
+    """
+    Customizes Response Structure"""
     return Response({
         'success': success,
         'data': data,
